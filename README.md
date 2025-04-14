@@ -73,9 +73,9 @@ triads/
 
 ---
 
-### References
+### 📚 References
 
-Milo et al., 2002 – Network Motifs: Simple Building Blocks of Complex Networks
+- [Milo et al., 2002](https://www.science.org/doi/10.1126/science.298.5594.824) – Network Motifs: Simple Building Blocks of Complex Networks
 
 ---
 
