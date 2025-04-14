@@ -68,6 +68,7 @@ print("Triad Significance Profile:", tsp)
 triads/
 ├── triads.py        # Main module with all functions
 └── README.md        # Documentation
+└── Example.ipynb    # Example notebook
 ```
 
 ---
