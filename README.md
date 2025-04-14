@@ -65,7 +65,7 @@ print("Triad Significance Profile:", tsp)
 ### Project Structure
 
 ```
-Netwrok-Analysis-Triads-Census/
+Network-Analysis-Triads-Census/
 │
 ├── triads.py        # Main module with all functions
 ├── README.md        # Documentation
