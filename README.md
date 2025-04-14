@@ -50,8 +50,7 @@ print("Triad Significance Profile:", tsp)
 
 ### Functions Overview
 
-<details>
-<summary>🧠 Functions Overview</summary>
+### 🧠 Functions Overview
 
 | Function | Description |
 |---------|-------------|
@@ -64,7 +63,6 @@ print("Triad Significance Profile:", tsp)
 | `triad_significance_profile(matrix, ensemble_size, edge_randomizations)` | Computes Z-scores for each triad type against a randomized ensemble. |
 | `functions()` | Lists all available functions in the module. |
 
-</details>
 
 
 ### Project Structure
