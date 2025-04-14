@@ -125,19 +125,3 @@ def triad_significance_profile(matrix: np.ndarray, ensemble_size: int, edge_rand
         for i in range(13)
     ]
     return tsp
-
-# --------------------------------------------------
-def functions():
-    """
-    Lists available functions in the module.
-    """
-    print(
-        "triad_census(matrix)\n"
-        "random_adj_matrix(n, p)\n"
-        "edge_list(adjacency_matrix)\n"
-        "adjacency_matrix(edge_list, size)\n"
-        "swap_edges(edge_list)\n"
-        "randomize(matrix, iterations)\n"
-        "triad_significance_profile(matrix, ensemble_size, edge_randomizations)\n"
-        "functions()\n"
-    )

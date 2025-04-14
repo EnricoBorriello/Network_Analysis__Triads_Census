@@ -60,8 +60,6 @@ print("Triad Significance Profile:", tsp)
 | `adjacency_matrix(edge_list, size)` | Converts a list of directed edges into an adjacency matrix of given size. |
 | `swap_edges(edge_list)` | Performs a double-edge swap that preserves the in/out-degree of nodes. |
 | `randomize(matrix, iterations)` | Randomizes a network by performing valid edge swaps. |
-| `triad_significance_profile(matrix, ensemble_size, edge_randomizations)` | Computes Z-scores for each triad type against a randomized ensemble. |
-| `functions()` | Lists all available functions in the module. |
 
 
 
