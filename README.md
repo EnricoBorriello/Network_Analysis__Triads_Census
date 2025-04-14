@@ -50,13 +50,30 @@ print("Triad Significance Profile:", tsp)
 
 ### Functions Overview
 
----
+<details>
+<summary>🧠 Functions Overview</summary>
+
+| Function | Description |
+|---------|-------------|
+| `triad_census(matrix)` | Computes the counts of all 13 triad types in a directed graph. |
+| `random_adj_matrix(n, p)` | Generates a random directed adjacency matrix with `n` nodes and edge probability `p`. |
+| `edge_list(adj_matrix)` | Converts an adjacency matrix into a list of directed edges. |
+| `adjacency_matrix(edge_list, size)` | Converts a list of directed edges into an adjacency matrix of given size. |
+| `swap_edges(edge_list)` | Performs a double-edge swap that preserves the in/out-degree of nodes. |
+| `randomize(matrix, iterations)` | Randomizes a network by performing valid edge swaps. |
+| `triad_significance_profile(matrix, ensemble_size, edge_randomizations)` | Computes Z-scores for each triad type against a randomized ensemble. |
+| `functions()` | Lists all available functions in the module. |
+
+</details>
+
 
 ### Project Structure
 
+````
 triads/
 ├── triads.py        # Main module with all functions
 └── README.md        # Documentation
+```
 
 ---
 
