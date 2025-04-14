@@ -1,10 +1,10 @@
-# 📊 Triad Census & Significance Profile in Directed Graphs
+# Triad Census & Significance Profile in Directed Graphs
 
 This Python module performs a **triad census** on a directed network represented as an adjacency matrix. It also computes the **Triad Significance Profile (TSP)** by comparing the real network to randomized versions preserving degree distributions.
 
 ---
 
-### ✨ Features
+### Features
 
 - Count all 13 possible triad types in a directed graph
 - Generate random directed graphs
@@ -15,7 +15,7 @@ This Python module performs a **triad census** on a directed network represented
 
 ---
 
-### 📦 Requirements
+### Requirements
 
 - Python 3.7+
 - NumPy
@@ -28,7 +28,7 @@ pip install numpy
 
 ---
 
-### 🚀 Usage
+### Usage
 
 ```python
 import numpy as np
@@ -48,9 +48,8 @@ print("Triad Significance Profile:", tsp)
 
 ---
 
-### Functions Overview
 
-### 🧠 Functions Overview
+### Functions Overview
 
 | Function | Description |
 |---------|-------------|
@@ -73,7 +72,7 @@ triads/
 
 ---
 
-### 📚 References
+### References
 
 - [Milo et al., 2002](https://www.science.org/doi/10.1126/science.298.5594.824) – Network Motifs: Simple Building Blocks of Complex Networks
 
