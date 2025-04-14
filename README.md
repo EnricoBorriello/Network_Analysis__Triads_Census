@@ -72,11 +72,6 @@ Netwrok-Analysis-Triads-Census/
 └── Example.ipynb    # Example notebook
 ```
 
----
-
-### References
-
-- [Milo et al., 2002](https://www.science.org/doi/10.1126/science.298.5594.824) – Network Motifs: Simple Building Blocks of Complex Networks
 
 ---
 
@@ -89,6 +84,13 @@ MIT License. See `LICENSE` file for more details.
 ## Contributions
 
 Pull requests are welcome! If you find a bug or want a feature, feel free to open an issue.
+
+---
+
+### References
+
+- [Milo et al., 2002](https://www.science.org/doi/10.1126/science.298.5594.824) – Network Motifs: Simple Building Blocks of Complex Networks
+
 
 ---
 
