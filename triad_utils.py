@@ -2,176 +2,142 @@ import numpy as np
 from numpy import linalg as lin
 import random as rn
 
-# ------------------------------------
+# --------------------------------------------------
+def triad_census(matrix: np.ndarray) -> np.ndarray:
+    """
+    Computes the triad census of a directed graph represented by an adjacency matrix.
+    Returns a 13-element vector representing counts of each triad type.
+    """
+    A = matrix
+    n = A.shape[0]
+    At = A.T
+    Ones = np.ones((n, n), dtype=int)
 
-def triad_census(matrix):
-    
-    A   = matrix
-    n   = len(A) 
-    At  = np.transpose(A)
-    Ones = np.ones((n,n))
+    # Edge configuration helpers
+    X = (Ones - A) * (Ones - At)  # No edges between node pairs
+    Y = A * At                    # Mutual edges
+    Z = A * (Ones - At)          # Asymmetric one-way edges
 
-    X  = np.multiply(Ones-A,Ones-At)
-    Y = np.multiply(A,At)
-    Z  = np.multiply(A,Ones-At)
-    Y2 = lin.matrix_power(Y,2)
-    Y3 = lin.matrix_power(Y,3)
-    
-    B = np.dot(At,A) -np.dot(Y,A) -np.dot(At,Y) +lin.matrix_power(Y ,2)
-    Bp = np.dot(A,At) -np.dot(Y,At) -np.dot(A,Y) +lin.matrix_power(Y ,2)
-    C = lin.matrix_power(A ,2) -np.dot(Y,A) -np.dot(A,Y) +lin.matrix_power(Y ,2)
-    D = np.dot(Y,At) -lin.matrix_power(Y ,2)
-    E = np.dot(Y,A) -lin.matrix_power(Y ,2)
+    Y2 = np.dot(Y, Y)
+    Y3 = np.dot(Y2, Y)
 
-    t = np.zeros(13) 
-# Triad 1
-    P1 = np.multiply(X,B)
-    t[0]  = (np.sum(P1)-np.trace(P1))/2   # t[0] is the count for triad 1, etc. 
-# Triad 2
-    P2 = np.multiply(X,Bp)
-    t[1]  = (np.sum(P2)-np.trace(P2))/2  
-# Triad 3
-    P3 = np.multiply(X,C)
-    t[2] = np.sum(P3)-np.trace(P3)
-# Triad 4
-    P4 = np.multiply(X,D)
-    t[3] = np.sum(P4)-np.trace(P4)
-# Triad 5
-    P5 = np.multiply(X,E)
-    t[4] = np.sum(P5)-np.trace(P5)
-# Triad 6
-    P6 = np.multiply(X,Y2)
-    t[5] = (np.sum(P6)-np.trace(P6))/2
-# Triad 7
-    P7 = np.multiply(Z,C)
-    t[6] = np.sum(P7)   
-# Triad 8    
-    t[7] = np.trace(lin.matrix_power(Z,3))/3   
-# Triad 9
-    P9 = np.multiply(Y,B)
-    t[8] = np.sum(P9)/2
-# Triad 10
-    P10 = np.multiply(Y,Bp)
-    t[9] = np.sum(P10)/2
-# Triad 11   
-    P11 = np.multiply(Y,C)
-    t[10] = np.sum(P11)   
-# Triad 12   
-    P12 = np.multiply(Z,Y2)
-    t[11] = np.sum(P12)
-# Triad 13
-    t[12] = np.trace(Y3)/6
+    # Helper matrices for triad identification
+    B = np.dot(At, A) - np.dot(Y, A) - np.dot(At, Y) + Y2
+    Bp = np.dot(A, At) - np.dot(Y, At) - np.dot(A, Y) + Y2
+    C = np.dot(A, A) - np.dot(Y, A) - np.dot(A, Y) + Y2
+    D = np.dot(Y, At) - Y2
+    E = np.dot(Y, A) - Y2
+
+    t = np.zeros(13)
+
+    # Count different triad types
+    t[0]  = (np.sum(X * B) - np.trace(X * B)) / 2
+    t[1]  = (np.sum(X * Bp) - np.trace(X * Bp)) / 2
+    t[2]  = np.sum(X * C) - np.trace(X * C)
+    t[3]  = np.sum(X * D) - np.trace(X * D)
+    t[4]  = np.sum(X * E) - np.trace(X * E)
+    t[5]  = (np.sum(X * Y2) - np.trace(X * Y2)) / 2
+    t[6]  = np.sum(Z * C)
+    t[7]  = np.trace(np.dot(Z, np.dot(Z, Z))) / 3
+    t[8]  = np.sum(Y * B) / 2
+    t[9]  = np.sum(Y * Bp) / 2
+    t[10] = np.sum(Y * C)
+    t[11] = np.sum(Z * Y2)
+    t[12] = np.trace(Y3) / 6
 
     return t.astype(int)
 
-# ------------------------------------
-
-def random_adj_matrix(N,p):
-#random non symmetric with n, p
-    A = np.zeros((N,N), dtype=int)
-    for i in range(N):
-        for j in range(N):
-            if rn.random() < p and i!=j:
-                A[i][j] = 1
+# --------------------------------------------------
+def random_adj_matrix(n: int, p: float) -> np.ndarray:
+    """
+    Generates a random directed adjacency matrix with edge probability p.
+    No self-loops.
+    """
+    A = (np.random.rand(n, n) < p).astype(int)
+    np.fill_diagonal(A, 0)
     return A
 
-# ------------------------------------
+# --------------------------------------------------
+def edge_list(adj_matrix: np.ndarray) -> list:
+    """
+    Converts an adjacency matrix to a list of directed edges.
+    """
+    return [[i, j] for i in range(len(adj_matrix)) for j in range(len(adj_matrix)) if adj_matrix[i, j] == 1]
 
-def edge_list(adjacency_matrix):
-# only works for unweighted networks (weights = 1) 
-    E = []
-    A = np.array(adjacency_matrix)
-    n = len(A)
-    for i in range(n):
-        for j in range(n):
-            if A[i,j] == 1:
-                E.append([i,j])
-    return E
-
-# ------------------------------------
-
-def adjacency_matrix(edge_list,size):
-    n = size
-    A = np.zeros((n,n)).astype(int)
-    E = edge_list
-    for e in E:
-        A[e[0],e[1]] = 1
+# --------------------------------------------------
+def adjacency_matrix(edge_list: list, size: int) -> np.ndarray:
+    """
+    Converts an edge list back to an adjacency matrix of specified size.
+    """
+    A = np.zeros((size, size), dtype=int)
+    for src, tgt in edge_list:
+        A[src, tgt] = 1
     return A
 
-# ------------------------------------
+# --------------------------------------------------
+def swap_edges(edge_list: list, max_attempts: int = 1000) -> list:
+    """
+    Attempts to perform a double-edge swap while avoiding self-loops and duplicate edges.
+    """
+    E = edge_list[:]
+    for _ in range(max_attempts):
+        x0, x1 = rn.sample(E, 2)
+        y0, y1 = [x0[0], x1[1]], [x1[0], x0[1]]
 
-def swap_edges(edge_list):
-    E = edge_list
-    
-    marker = 0
-    while marker == 0:
-
-        [x0,x1] = rn.sample(E,2)
-        y0 = [x0[0],x1[1]]
-        y1 = [x1[0],x0[1]]
-
-        if y0 in E or y1 in E or x0[0] == x1[1] or x1[0] == x0[1]:
-        # 3rd and 4th conditions are there to prevent the formation of self-loops
-            marker = 0
-        else:
-            marker = 1
+        # Validity check
+        if y0 not in E and y1 not in E and x0[0] != x1[1] and x1[0] != x0[1]:
             E.remove(x0)
             E.remove(x1)
             E.append(y0)
             E.append(y1)
-    
-    return E
+            return E
+    raise RuntimeError("Failed to swap edges after max attempts.")
 
-# ------------------------------------
-
-def randomize(matrix,iterations):
-# suggested number of iterations = 10*len(edge_list(A))
-    
-    A = matrix
-    E = edge_list(A)
-    
-    for i in range(iterations):
+# --------------------------------------------------
+def randomize(matrix: np.ndarray, iterations: int) -> np.ndarray:
+    """
+    Randomizes a network via edge swaps while preserving in/out-degree distributions.
+    """
+    E = edge_list(matrix)
+    for _ in range(iterations):
         E = swap_edges(E)
-    
-    return adjacency_matrix(E,len(A))
+    return adjacency_matrix(E, len(matrix))
 
-# ------------------------------------
-
-def triad_significance_profile(matrix, ensemble_size, edge_randomizations):
-# assumptions: no self-loops, all weights = 1
-
+# --------------------------------------------------
+def triad_significance_profile(matrix: np.ndarray, ensemble_size: int, edge_randomizations: int) -> list:
+    """
+    Computes the Triad Significance Profile (TSP) of a network by comparing the real triad distribution
+    to those from randomized versions of the same network.
+    """
+    original = triad_census(matrix)
     ensemble = []
-    
-    p = triad_census(matrix)
 
     for _ in range(ensemble_size):
-        profile = []
-        random_matrix = randomize(matrix,edge_randomizations)
-        t = list(triad_census(random_matrix))
-        ensemble.append(t)
+        rand_mat = randomize(matrix, edge_randomizations)
+        ensemble.append(triad_census(rand_mat))
 
-        m = np.mean(ensemble,axis = 0)
-        s = np.std(ensemble,axis = 0)
+    ensemble = np.array(ensemble)
+    m = np.mean(ensemble, axis=0)
+    s = np.std(ensemble, axis=0, ddof=1)
 
-    for i in range(13):
-        if p[i] == m[i]:
-            profile.append(0)
-        else:
-            profile.append(  (p[i]-m[i])/s[i]  )
+    tsp = [
+        0 if s[i] == 0 else (original[i] - m[i]) / s[i]
+        for i in range(13)
+    ]
+    return tsp
 
-    return profile
-# ------------------------------------
-
+# --------------------------------------------------
 def functions():
-    return print(
-    'triad_census(matrix)\n'
-    'random_adj_matrix(N,p)\n'
-    'edge_list(adjacency_matrix)\n'
-    'adjacency_matrix(edge_list,size)\n'
-    'swap_edges(edge_list)\n'
-    'randomize(matrix,iterations)\n'
-    'triad_significance_profile(matrix, ensemble_size, edge_randomizations):\n'
-
-
-    'functions()\n'
+    """
+    Lists available functions in the module.
+    """
+    print(
+        "triad_census(matrix)\n"
+        "random_adj_matrix(n, p)\n"
+        "edge_list(adjacency_matrix)\n"
+        "adjacency_matrix(edge_list, size)\n"
+        "swap_edges(edge_list)\n"
+        "randomize(matrix, iterations)\n"
+        "triad_significance_profile(matrix, ensemble_size, edge_randomizations)\n"
+        "functions()\n"
     )
