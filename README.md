@@ -80,6 +80,19 @@ Netwrok-Analysis-Triads-Census/
 
 ---
 
+## License
+
+MIT License. See `LICENSE` file for more details.
+
+---
+
+## Contributions
+
+Pull requests are welcome! If you find a bug or want a feature, feel free to open an issue.
+
+---
+
+
 ### Author
 
 Built by [Enrico Borriello](https://github.com/EnricoBorriello)
