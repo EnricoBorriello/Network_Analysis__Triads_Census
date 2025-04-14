@@ -65,7 +65,7 @@ print("Triad Significance Profile:", tsp)
 
 ### Project Structure
 
-````
+```
 triads/
 ├── triads.py        # Main module with all functions
 └── README.md        # Documentation
