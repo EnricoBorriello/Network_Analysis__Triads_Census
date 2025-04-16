@@ -67,7 +67,7 @@ print("Triad Significance Profile:", tsp)
 ```
 Network-Analysis-Triads-Census/
 │
-├── triad_utils.py        # Main module with all functions
+├── triad_utils.py   # Main module with all functions
 ├── README.md        # Documentation
 └── Example.ipynb    # Example notebook
 ```
