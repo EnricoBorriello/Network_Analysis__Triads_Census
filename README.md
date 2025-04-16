@@ -11,7 +11,6 @@ This Python module performs a **triad census** on a directed network represented
 - Convert between adjacency matrices and edge lists
 - Degree-preserving network randomization using edge swaps
 - Compute triad significance profiles (Z-scores)
-- Clean, modular, and well-documented code
 
 ---
 
